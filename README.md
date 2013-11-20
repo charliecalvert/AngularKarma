@@ -5,7 +5,9 @@ This is a bare bones project that provides support for:
 
 - Angular
 - Jasmine
-- Karma 
+- Karma
+
+Since this project was pulled from GitHub, it includes a .git folder.
 
 - [GitHub Repository for this Project](https://github.com/charliecalvert/AngularKarma)
 - [Angular Site](http://www.angularjs.org/)
