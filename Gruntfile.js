@@ -16,6 +16,7 @@ module.exports = function(grunt) { 'use strict';
 					'**/angular-resource.js',
 					'**/Library/angular-resource.min.js',
                     '**/Library/angular-angular.min.js',
+                    '**/Library/angular.min.js',
 					'**/node_modules/**',
 					'**/handlebars.js',
 					'**/jquery*.js',
