@@ -20,6 +20,14 @@ Since this project was pulled from GitHub, it includes a .git folder. You should
 consider removing this folder if you do not want to use git, or if this folder
 is embedded inside another git repository.
 
+Periodically, you should go to the command line in the root directory
+for this folder and run **grunt jshint**.
+
+	grunt jshint
+	
+You should then examine the **result.xml** file to look for any problems
+in your code.
+
 - [GitHub Repository for this Project](https://github.com/charliecalvert/AngularKarma)
 - [Angular Site](http://www.angularjs.org/)
 - [Jasmine](http://pivotal.github.io/jasmine/)
