@@ -7,7 +7,18 @@ This is a bare bones project that provides support for:
 - Jasmine
 - Karma
 
-Since this project was pulled from GitHub, it includes a .git folder.
+To get started, run **npm install** in the root directory for this
+project:
+
+	npm install
+
+Next, start Karma by typing **karma start**:
+
+	karma start
+
+Since this project was pulled from GitHub, it includes a .git folder. You should
+consider removing this folder if you do not want to use git, or if this folder
+is embedded inside another git repository.
 
 - [GitHub Repository for this Project](https://github.com/charliecalvert/AngularKarma)
 - [Angular Site](http://www.angularjs.org/)
