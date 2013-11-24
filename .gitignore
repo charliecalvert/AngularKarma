@@ -12,6 +12,7 @@ logs
 results
 result.xml
 test-results.xml
+AngularKarma.zip
 
 npm-debug.log
 node_modules
