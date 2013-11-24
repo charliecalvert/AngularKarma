@@ -86,5 +86,5 @@ module.exports = function(grunt) { 'use strict';
 	grunt.loadNpmTasks('grunt-contrib-compress');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 
-	grunt.registerTask('dist', ['clean:zip', 'compress:angularKarma']);
+	grunt.registerTask('dist', ['clean:zip', 'compress:angularKarma', 'copy:main']);
 };

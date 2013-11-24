@@ -1,6 +1,8 @@
 AngularKarma
 ============
 
+11-23-2013: Added grunt based distribution support.
+
 This is a bare bones project that provides support for:
 
 - Angular
@@ -16,9 +18,10 @@ Next, start Karma by typing **karma start**:
 
 	karma start
 
-Since this project was pulled from GitHub, it includes a .git folder. You should
-consider removing this folder if you do not want to use git, or if this folder
-is embedded inside another git repository.
+Since this project may have been pulled from GitHub, it could include 
+a .git folder. You should consider removing this folder if you do 
+not want to use git, or if this folder is embedded inside another 
+git repository.
 
 Periodically, you should go to the command line in the root directory
 for this folder and run **grunt jshint**.
