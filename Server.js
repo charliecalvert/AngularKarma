@@ -1,8 +1,14 @@
+/* 
+	Server.js by Charlie Calvert 
+	v0.2.1
+*/
+
 var http = require('http');
 var url = require('url');
 var port = process.env.PORT || 30025;
 var fs = require('fs');
 var path = require('path');
+var lastHtmlFile = "";
 
 function getPath(request) {
 	return url.parse(request.url).pathname;
@@ -86,6 +92,35 @@ function getFile(fileName) {
 	}
 }
 
+function getBinaryFile(fileName, response) {
+	try {
+		fs.readFile(fileName, "binary", function(err, path) {
+			if (err) {
+				console.log('***** ELF BINARY ERROR REPORT *****');
+				console.log(err.name);
+				console.log("Last HTML file: " + lastHtmlFile);
+				console.log('Can not open binary file: ' + path);
+				console.log(err.message);
+				console.log('***** END ERROR REPORT *****');
+				console.log("Error reading binary file");
+				process.exit(1);
+			} else {
+				response.writeHeader(200, {
+					"Content-Type" : "image/png"
+				});
+				response.write(path, "binary");
+				response.end();
+			} 
+		}); 
+	} catch(e) {
+		console.log('***** ELF BINARY ERROR REPORT *****');
+		console.log(e.name);
+		console.log('Can not open binary file: ' + fileName);
+		console.log(e.message);
+		console.log('***** END ERROR REPORT *****');		
+	}
+}
+
 function getType(ext) {
 	switch (ext) {
 		case 'css': 
@@ -93,10 +128,18 @@ function getType(ext) {
 		case 'html':
 		case 'htm':
 			return 'text/html';
-		case 'js':
+		case 'js':		
 			return 'text/javascript';
+		case 'json':
+			return 'application/json';
 		default:
 			throw 'Unknown type: ' + ext;
+	}
+}
+
+function setLastHtml(path, ext) {
+	if (ext === 'html' || ext === 'htm') {
+		lastHtmlFile = path;
 	}
 }
 
@@ -104,9 +147,10 @@ function loadContent(request, response) {
 	var path = getPath(request);
 	var ext = getExtension(path);
 	console.log("Request for " + path + " received.");
-	if (ext === 'css' || ext === 'html' || ext === 'htm' || ext === 'js') {
+	if (ext === 'css' || ext === 'html' || ext === 'htm' || ext === 'js' || ext === 'json') {
+		setLastHtml(path, ext);
 		findFile(__dirname, path.replace('\/', ''), function(err, results) {
-			console.log("Found: " + path);			
+			console.log("Found: " + path);
 			var css = getFile(results[0]);
 			if (css === null) {
 				throw "Can't find: " + path;
@@ -121,25 +165,11 @@ function loadContent(request, response) {
 	} else if (getExtension(path) === 'png' || getExtension(path) === 'gif' || getExtension(path) === 'jpg') {
 		findFile(__dirname, path.replace('\/', ''), function(err, results) {
 			console.log("Found: " + path);
-			fs.readFile(results[0], "binary", function(err, file) {
-				if (err) {
-					console.log("Error reading binary file");
-					response.writeHeader(500, {
-						"Content-Type" : "text/plain"
-					});
-					response.write(err + "\n");
-					response.end();
-				} else {
-					response.writeHeader(200, {
-						"Content-Type" : "image/png"
-					});
-					response.write(file, "binary");
-					response.end();
-				}
-			});
+			getBinaryFile(results[0], response);
 		});
 	} else {
-		var html = fs.readFileSync(__dirname + '/index.html');
+		lastHtmlFile = '/index.html';
+		var html = fs.readFileSync(__dirname + lastHtmlFile);
 		response.writeHead(200, {
 			'Content-Type' : 'text/html'
 		});
